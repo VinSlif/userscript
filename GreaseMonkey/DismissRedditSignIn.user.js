@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name         Dismiss Reddit Sign In Pop-up
-// @namespace    na
-// @version      1.0
-// @downloadURL  https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/DismissRedditSignIn.js
-// @updateURL    https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/DismissRedditSignIn.js
 // @description  Removes the Reddit sign in pop-up on the Reddit main page
 // @author       VinSlif
+// @namespace    https://github.com/VinSlif/userscript
+// @version      1.0
+// @downloadURL  https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/DismissRedditSignIn.user.js
+// @updateURL    https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/DismissRedditSignIn.user.js
 // @match        https://*.reddit.com/
 // @grant        none
 // @noframes

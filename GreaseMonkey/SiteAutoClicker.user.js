@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name         Site Auto Clicker
-// @namespace    na
-// @version      0.1
-// @downloadURL  https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/DismissRedditSignIn.js
-// @updateURL    https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/DismissRedditSignIn.js
 // @description  Automatically clicks a specified element for a site
 // @author       VinSlif
+// @namespace    https://github.com/VinSlif/userscript
+// @version      0.1
+// @downloadURL  https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/SiteAutoClicker.user.js
+// @updateURL    https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/SiteAutoClicker.user.js
 // @match        http*://*/*
 // @grant        none
 // @noframes

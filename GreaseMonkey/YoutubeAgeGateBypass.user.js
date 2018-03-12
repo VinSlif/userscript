@@ -1,20 +1,15 @@
 // ==UserScript==
 // @name         YouTube Age Gate Bypass
-// @namespace    na
-// @version      0.5
-// @downloadURL  https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/DismissRedditSignIn.js
-// @updateURL    https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/DismissRedditSignIn.js
 // @description  Places an embedded version of the video to bypass YouTube age verifcation
 // @author       VinSlif
+// @namespace    https://github.com/VinSlif/userscript
+// @version      0.5
+// @downloadURL  https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/YoutubeAgeGateBypass.user.js
+// @updateURL    https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/YoutubeAgeGateBypass.user.js
 // @match        *://*.youtube.com/*
 // @grant        none
 // @noframes
 // ==/UserScript==
-
-// ToDo
-// have IFrame mimic video player style > responseive width/height
-// show related videos?
-//  may be impossible
 
 // Creates an embedded youtube IFrame below the video
 function createIFrameVideo(videoID) {

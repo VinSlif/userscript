@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name         Google Image Site Exclusion
-// @namespace    na
-// @version      1.0
-// @downloadURL  https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/DismissRedditSignIn.js
-// @updateURL    https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/DismissRedditSignIn.js
 // @description  Exclude specified sites from Google search results
 // @author       VinSlif
-// @match        http*://*.google.tld/*
+// @namespace    https://github.com/VinSlif/userscript
+// @version      1.0
+// @downloadURL  https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/ExlcudeImageSite.user.js
+// @updateURL    https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/ExlcudeImageSite.user.js
 // @require      https://raw.githubusercontent.com/VinSlif/userscript/master/Utility/Utilities.js
+// @match        http*://*.google.tld/*
 // @grant        none
 // ==/UserScript==
 
