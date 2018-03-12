@@ -3,7 +3,7 @@
 // @namespace    na
 // @version      0.1
 // @description  Automatically clicks a specified element for a site
-// @author       You
+// @author       VinSlif
 // @match        http*://*/*
 // @grant        none
 // @noframes
@@ -23,17 +23,6 @@ function elementClicker(host, el) {
 function click(elementID) {
     var el = document.querySelector(elementID);
     if (el !== null) el.click();
-    /*else {
-        var i = 0, check = setInterval(function() {
-            el = document.querySelector(elementID);
-            console.log(el);
-            if (el !== null || i > 10) {
-                clearInterval(check);
-                el.click();
-            }
-            i++;
-        });
-    }*/
 }
 
 (function () {

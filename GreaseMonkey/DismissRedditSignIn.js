@@ -3,7 +3,7 @@
 // @namespace    na
 // @version      1.0
 // @description  Removes the Reddit sign in pop-up on the Reddit main page
-// @author       You
+// @author       VinSlif
 // @match        https://*.reddit.com/
 // @grant        none
 // @noframes

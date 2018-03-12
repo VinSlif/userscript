@@ -3,7 +3,7 @@
 // @namespace    na
 // @version      0.5
 // @description  Places an embedded version of the video to bypass YouTube age verifcation
-// @author       You
+// @author       VinSlif
 // @match        *://*.youtube.com/*
 // @grant        none
 // @noframes

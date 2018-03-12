@@ -3,7 +3,7 @@
 // @namespace    na
 // @version      1.0
 // @description  Exclude specified sites from Google search results
-// @author       You
+// @author       VinSlif
 // @include      http*://*.google.tld/*
 // @grant        none
 // ==/UserScript==

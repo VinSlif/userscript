@@ -3,7 +3,7 @@
 // @namespace    na
 // @version      1.0
 // @description  Skips all transcription pages to directly open the reader for the chapter whenever possible
-// @author       You
+// @author       VinSlif
 // @match        http://lhtranslation.com/*
 // @grant        GM_xmlhttpRequest
 // ==/UserScript==
