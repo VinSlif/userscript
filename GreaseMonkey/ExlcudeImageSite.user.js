@@ -7,7 +7,7 @@
 // @downloadURL  https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/ExlcudeImageSite.user.js
 // @updateURL    https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/ExlcudeImageSite.user.js
 // @require      https://raw.githubusercontent.com/VinSlif/userscript/master/Utility/Utilities.js
-// @match        http*://*.google.tld/*
+// @include      http*://*.google.tld/*
 // @grant        none
 // ==/UserScript==
 
