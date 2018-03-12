@@ -13,7 +13,6 @@
 
 var sitesArray = [
     new elementClicker('imgur.com', '.post-loadall'),
-    //new elementClicker('reddit.com', '.skip-for-now'),
 ];
 
 // Element click object constructor
