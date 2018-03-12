@@ -2,9 +2,12 @@
 // @name         Google Image Site Exclusion
 // @namespace    na
 // @version      1.0
+// @downloadURL  https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/DismissRedditSignIn.js
+// @updateURL    https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/DismissRedditSignIn.js
 // @description  Exclude specified sites from Google search results
 // @author       VinSlif
-// @include      http*://*.google.tld/*
+// @match        http*://*.google.tld/*
+// @require      https://raw.githubusercontent.com/VinSlif/userscript/master/Utility/Utilities.js
 // @grant        none
 // ==/UserScript==
 
@@ -49,7 +52,7 @@ var googleSearch = {
 
             // Adds site exclusion
             if (valChanged) this.clickGoogleSearchButton();
-        } else console.error(GM_info.script.name + ': searchForm not found');
+        } else Util.error('searchForm not found');
     },
 
     // Removes the site site exclusion modifier
@@ -70,7 +73,7 @@ var googleSearch = {
 
             // Removes site exclusion
             if (valChanged) this.clickGoogleSearchButton();
-        } else console.error(GM_info.script.name + ': searchForm not found');
+        } else Util.error('searchForm not found');
     },
 
     // Clicks Google search button
@@ -94,7 +97,7 @@ var googleSearch = {
                 // Checks if exlcusion is applied to all searches
                 else if (searchState == ActiveStates[2]) googleSearch.addSiteExclusion();
                 // Throw error if unmatched search state
-                else console.error(GM_info.script.name + ': var searchState reached edge case exception');
+                else Util.error(GM_info.script.name + ': var searchState reached edge case exception');
             }
-    } else console.error(GM_info.script.name + ': var searchState is out of bounds');
+    } else Util.error('var searchState is out of bounds');
 })();

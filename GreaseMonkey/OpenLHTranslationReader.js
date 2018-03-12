@@ -2,6 +2,8 @@
 // @name         Open LHTranslation Reader
 // @namespace    na
 // @version      1.0
+// @downloadURL  https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/DismissRedditSignIn.js
+// @updateURL    https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/DismissRedditSignIn.js
 // @description  Skips all transcription pages to directly open the reader for the chapter whenever possible
 // @author       VinSlif
 // @match        http://lhtranslation.com/*

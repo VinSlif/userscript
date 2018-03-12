@@ -2,6 +2,8 @@
 // @name         YouTube Age Gate Bypass
 // @namespace    na
 // @version      0.5
+// @downloadURL  https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/DismissRedditSignIn.js
+// @updateURL    https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/DismissRedditSignIn.js
 // @description  Places an embedded version of the video to bypass YouTube age verifcation
 // @author       VinSlif
 // @match        *://*.youtube.com/*
