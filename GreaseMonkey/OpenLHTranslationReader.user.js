@@ -6,7 +6,7 @@
 // @version      1.0
 // @downloadURL  https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/OpenLHTranslationReader.user.js
 // @updateURL    https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/OpenLHTranslationReader.user.js
-// @match        http://lhtranslation.com/*
+// @match        http://lhtranslation.net/*
 // @grant        GM_xmlhttpRequest
 // ==/UserScript==
 
