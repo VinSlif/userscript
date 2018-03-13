@@ -13,6 +13,11 @@
 // @noframes
 // ==/UserScript==
 
+//* USAGE *//
+// Users must add the sites and cookies to change
+// at the bottom of this script in the the
+// sitesArray variable
+
 var cookie = {
     // Check what to do with cookie
     check: function (info) {
