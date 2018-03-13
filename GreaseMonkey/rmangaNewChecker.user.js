@@ -84,7 +84,7 @@ var redditData = {
             url: 'https://www.reddit.com/r/manga/new' + (pageEncode ? pageEncode : ''),
             onload: function (res) {
                 // Gets the encoded url for the next page
-                let hrefStr = Util.parse.html(res.responseText).querySelector('.next-button').firstElementChild.href;
+                let hrefStr = Util.parse.getHTML(res.responseText).querySelector('.next-button').firstElementChild.href;
                 // Gets the next pages JSON
                 redditData.getJSON(hrefStr.substr(hrefStr.indexOf('/?count') + 1));
             }
