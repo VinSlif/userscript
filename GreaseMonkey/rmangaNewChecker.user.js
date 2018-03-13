@@ -66,11 +66,9 @@ var redditData = {
                     let entry = listLink[i].data;
 
                     // Checks if [DISC] tag is in the title or flair, adds to array if found
-                    if (entry.title.indexOf('[DISC]') !== -1 || entry.link_flair_text == '[DISC]') {
+                    if (entry.title.indexOf('[DISC]') !== -1 || entry.link_flair_text == '[DISC]')
                         // Adds link info to collected data
-                        let info = new checkData.linkInfo(entry.title.replace('[DISC] ', ''), entry.url, 'https://www.reddit.com' + entry.permalink);
-                        checkData.addData(info);
-                    }
+                        checkData.addData(new checkData.linkInfo(entry.title.replace('[DISC] ', ''), entry.url, 'https://www.reddit.com' + entry.permalink));
                 }
 
                 // Checks for the number of pages to be parsed
