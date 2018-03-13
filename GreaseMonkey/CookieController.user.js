@@ -43,7 +43,7 @@ var cookie = {
 
                     // Checks if values need to be created
                     cMade.length = cMake.length;
-                    Util.setAll(cMade, false);
+                    Util.init.setAll(cMade, false);
 
                     // Goes through all split cookie values
                     for (let i = 0, lenExist = cEdit.length; i < lenExist; i++) {

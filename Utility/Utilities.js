@@ -1,27 +1,39 @@
 // Utility functions
 var Util = {
-    // Displays log message
-    log: function (msg) {
-        console.log(GM_info.script.name + ': ' + msg);
+    // Display custom console messages
+    console: {
+        // Log message
+        log: function (msg) {
+            console.log('%c' + GM_info.script.name + ':', 'color: blue', msg);
+        },
+        // Error message
+        error: function (msg) {
+            console.error('%c' + GM_info.script.name + ':', 'color: white; background-color: red', msg);
+        },
     },
-    // Displays error message
-    error: function (msg) {
-        console.error(GM_info.script.name + ': ' + msg);
+    // Parses strings to formats
+    parse: {
+        // Parses a string as an HTML element
+        html: function (str) {
+            var tmp = document.implementation.createHTMLDocument();
+            tmp.body.innerHTML = str;
+            return tmp;
+        },
     },
-    // Sets all elements of an empty array to a value
-    setAll: function (arr, val) {
-        for (let i = 0, n = arr.length; i < n; i++) arr[i] = val;
+    // Math functions
+    math: {
+        // Gets a random number between two(2) supplied numbers
+        getRandomIntInclusive: function (min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
+        },
     },
-    // Gets a random number between two(2) supplied numbers
-    getRandomIntInclusive: function (min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
-    },
-    // Parses a string as an HTML element
-    parseHTML: function (str) {
-        var tmp = document.implementation.createHTMLDocument();
-        tmp.body.innerHTML = str;
-        return tmp;
+    // Value initializers
+    init: {
+        // Sets all elements of an empty array to a value
+        setAll: function (arr, val) {
+            for (let i = 0, n = arr.length; i < n; i++) arr[i] = val;
+        },
     }
 }

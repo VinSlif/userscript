@@ -52,7 +52,7 @@ var googleSearch = {
 
             // Adds site exclusion
             if (valChanged) this.clickGoogleSearchButton();
-        } else Util.error('searchForm not found');
+        } else Util.console.error('searchForm not found');
     },
 
     // Removes the site site exclusion modifier
@@ -73,7 +73,7 @@ var googleSearch = {
 
             // Removes site exclusion
             if (valChanged) this.clickGoogleSearchButton();
-        } else Util.error('searchForm not found');
+        } else Util.console.error('searchForm not found');
     },
 
     // Clicks Google search button
@@ -97,7 +97,7 @@ var googleSearch = {
                 // Checks if exlcusion is applied to all searches
                 else if (searchState == ActiveStates[2]) googleSearch.addSiteExclusion();
                 // Throw error if unmatched search state
-                else Util.error(GM_info.script.name + ': var searchState reached edge case exception');
+                else Util.console.error(GM_info.script.name + ': var searchState reached edge case exception');
             }
-    } else Util.error('var searchState is out of bounds');
+    } else Util.console.error('var searchState is out of bounds');
 })();

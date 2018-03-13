@@ -123,7 +123,7 @@ function getMangaReleaseInfo(query, loc, medType, isList = true) {
             }
             
             // Gets the left side of the main content
-            let leftDiv = Util.parseHTML(res.responseText).querySelector('.sMember');
+            let leftDiv = Util.parse.html(res.responseText).querySelector('.sMember');
             if (!leftDiv) { // Checks if the left div exists
                 showRelease(['Error: no sMember']);
                 return;

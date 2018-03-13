@@ -40,7 +40,7 @@ var checkData = {
         // If pages still need to be checked, get the next pages encoded url
         if (this.cnt < this.pagesToCheck) redditData.getNextPage(encodeURL);
         // Displays all entries
-        else for (let i = 0, len = this.dispMsg.length; i < len; i++) Util.log(this.dispMsg[i].title + '\n' + this.dispMsg[i].permalink);
+        else for (let i = 0, len = this.dispMsg.length; i < len; i++) Util.console.log(this.dispMsg[i].title + '\n' + this.dispMsg[i].permalink);
     },
     
     // Object constructor for link entries found from JSON
@@ -84,7 +84,7 @@ var redditData = {
             url: 'https://www.reddit.com/r/manga/new' + (pageEncode ? pageEncode : ''),
             onload: function (res) {
                 // Gets the encoded url for the next page
-                let hrefStr = Util.parseHTML(res.responseText).querySelector('.next-button').firstElementChild.href;
+                let hrefStr = Util.parse.html(res.responseText).querySelector('.next-button').firstElementChild.href;
                 // Gets the next pages JSON
                 redditData.getJSON(hrefStr.substr(hrefStr.indexOf('/?count') + 1));
             }
