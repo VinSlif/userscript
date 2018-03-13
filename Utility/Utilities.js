@@ -14,7 +14,7 @@ var Util = {
     // Parses strings to formats
     parse: {
         // Parses a string as an HTML element
-        html: function (str) {
+        getHTML: function (str) {
             var tmp = document.implementation.createHTMLDocument();
             tmp.body.innerHTML = str;
             return tmp;
