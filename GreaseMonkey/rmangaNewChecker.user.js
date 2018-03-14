@@ -3,7 +3,7 @@
 // @description  Displays new chapter releases from r/manga
 // @author       VinSlif
 // @namespace    https://github.com/VinSlif/userscript
-// @version      0.3.5
+// @version      0.3.6
 // @downloadURL  https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/rmangaNewChecker.user.js
 // @updateURL    https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/rmangaNewChecker.user.js
 // @require      https://raw.githubusercontent.com/VinSlif/userscript/master/Utility/Utilities.js
