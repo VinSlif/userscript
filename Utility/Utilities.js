@@ -149,6 +149,19 @@ var Util = {
             }
             return GM_deleteValue(key);
         },
-
     },
+    // Child elements
+    child: {
+        /* Returns the child index of an element
+        * @param {Element} element index to find
+        */
+        getIndex: function (child) {
+            var parent = child.parentNode;
+            for (var i = parent.children.length - 1; i >= 0; i--) {
+                if (child == parent.children[i]) {
+                    return i;
+                }
+            }
+        },
+    }
 };
