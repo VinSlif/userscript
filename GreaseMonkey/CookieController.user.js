@@ -3,13 +3,16 @@
 // @description  Adds customized cookies to websites
 // @author       VinSlif
 // @namespace    https://github.com/VinSlif/userscript
-// @version      0.3.1
+// @version      0.3.2
 // @downloadURL  https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/CookieController.user.js
 // @updateURL    https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/CookieController.user.js
 // @require      https://raw.githubusercontent.com/VinSlif/userscript/master/Utility/Utilities.js
 // @match        http*://*/*
 // @run-at       document-start
-// @grant        none
+// @grant        GM_registerMenuCommand
+// @grant        GM_getValue
+// @grant        GM_setValue
+// @grant        GM_deleteValue
 // @noframes
 // ==/UserScript==
 
