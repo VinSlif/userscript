@@ -3,9 +3,10 @@
 // @description  Places an embedded version of the video to bypass YouTube age verifcation
 // @author       VinSlif
 // @namespace    https://github.com/VinSlif/userscript
-// @version      0.5
+// @version      0.5.1
 // @downloadURL  https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/YoutubeAgeGateBypass.user.js
 // @updateURL    https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/YoutubeAgeGateBypass.user.js
+// @require      https://raw.githubusercontent.com/VinSlif/userscript/master/Utility/Utilities.js
 // @match        *://*.youtube.com/*
 // @grant        none
 // @noframes
@@ -40,25 +41,11 @@ function checkAgeRestriction() {
         document.getElementById('player-unavailable').classList.add('hid'); // Age restricted message
         document.getElementById('placeholder-player').classList.add('hid'); // Actual video player
     }
-
-}
-
-// Applies custom console log formatting (for GM scripts)
-function log() {
-    var args = [].slice.call(arguments);
-    args.unshift('%c' + GM_info.script.name + ':', 'font-weight: bold;color: purple;');
-    console.log.apply(console, args);
 }
 
 (function () {
     'use strict';
 
-    // YouTube uses HTML5 history api for page loading
-    // https://stackoverflow.com/a/17128566
-    // https://stackoverflow.com/a/34100952
-    window.addEventListener("spfdone", checkAgeRestriction); // old youtube design
-    window.addEventListener("yt-navigate-start", checkAgeRestriction); // new youtube design
-
-    document.addEventListener("DOMContentLoaded", checkAgeRestriction); // one-time early processing
-    window.addEventListener("load", checkAgeRestriction); // one-time late postprocessing 
+    // Detect when page has loaded
+    Util.event.onDocumentReady(checkAgeRestriction);    
 })();
