@@ -107,11 +107,6 @@ var Util = {
          * @param {Function} function to execute when the page loads
          */
         onDocumentReady: function (fn) {
-            // YouTube uses HTML5 history api for page loading
-            // https://stackoverflow.com/a/17128566
-            // https://stackoverflow.com/a/34100952
-            window.addEventListener('spfdone', fn); // old youtube design
-            window.addEventListener('yt-navigate-start', fn); // new youtube design
             document.addEventListener('DOMContentLoaded', fn); // one-time early processing
             window.addEventListener('load', fn); // one-time late postprocessing 
         }
