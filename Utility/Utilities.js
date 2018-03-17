@@ -3,14 +3,14 @@ var Util = {
     // Display custom console messages
     console: {
         /* Custom console log message
-        * @param {String} message to be displayed
-        */
+         * @param {String} message to be displayed
+         */
         log: function (msg) {
             console.log('%c' + GM_info.script.name + ':', 'color: blue', msg);
         },
         /* Custom console error message
-        * @param {String} message to be displayed
-        */
+         * @param {String} message to be displayed
+         */
         error: function (msg) {
             console.error('%c' + GM_info.script.name + ':', 'color: white; background-color: red', msg);
         },
@@ -18,8 +18,8 @@ var Util = {
     // Parses strings to formats
     parse: {
         /* Parses a string as an HTML document
-        * @param {String} string to convert
-        */
+         * @param {String} string to convert
+         */
         getHTML: function (str) {
             let tmp = document.implementation.createHTMLDocument();
             tmp.body.innerHTML = str;
@@ -29,9 +29,9 @@ var Util = {
     // Math functions
     math: {
         /* Gets a random number between two(2) supplied numbers
-        * @param {Int} minimum number
-        * @param {Int} maximum number
-        */
+         * @param {Int} minimum number
+         * @param {Int} maximum number
+         */
         getRandomIntInclusive: function (min, max) {
             min = Math.ceil(min);
             max = Math.floor(max);
@@ -41,13 +41,14 @@ var Util = {
     // Value initializers
     init: {
         /* Sets all elements of an empty array to a value
-        * @param {Array} array to set
-        * @param value to set array to
-        */
+         * @param {Array} array to set
+         * @param value to set array to
+         */
         setAll: function (arr, val) {
             for (let i = 0, n = arr.length; i < n; i++) arr[i] = val;
         },
     },
+    // Affect css
     stylesheet: {
         /**
         * Add a stylesheet rule to the document (may be better practice, however,
@@ -99,5 +100,60 @@ var Util = {
                 styleSheet.insertRule(selector + '{' + propStr + '}', styleSheet.cssRules.length);
             }
         },
-    }
+    },
+    // Custom events
+    event: {
+        /* Detects when the page has loaded, including HTML5 history states and youtube
+         * @param {Function} function to execute when the page loads
+         */
+        onDocumentReady: function (fn) {
+            // YouTube uses HTML5 history api for page loading
+            // https://stackoverflow.com/a/17128566
+            // https://stackoverflow.com/a/34100952
+            window.addEventListener('spfdone', fn); // old youtube design
+            window.addEventListener('yt-navigate-start', fn); // new youtube design
+            document.addEventListener('DOMContentLoaded', fn); // one-time early processing
+            window.addEventListener('load', fn); // one-time late postprocessing 
+        }
+    },
+    // Access GreaseMonkey or local storage, user defined
+    store: {
+        /* Sets storage value with a key
+         * @param {String} storage key
+         * @param {Value} value to be stored
+         */
+        set: function (key, val) {
+            val = JSON.stringify(val);
+            if (typeof GM_setValue === 'undefined') {
+                return localStorage.setItem(key, val);
+            }
+            return GM_setValue(key, val);
+        },
+        /* Retrieves item in storage by a key
+         * @param {String} storage key
+         */
+        get: function (key) {
+            var res;
+            if (typeof GM_getValue === 'undefined') {
+                res = localStorage.getItem(key);
+            } else {
+                res = GM_getValue(key);
+            }
+            try {
+                return JSON.parse(res);
+            } catch (e) {
+                return res;
+            }
+        },
+        /* Deletes item in storage by a key
+         * @param {String} storage key
+         */
+        del: function (key) {
+            if (typeof GM_deleteValue === 'undefined') {
+                return localStorage.removeItem(key);
+            }
+            return GM_deleteValue(key);
+        },
+
+    },
 };
