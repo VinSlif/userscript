@@ -3,13 +3,22 @@
 // @description  Exclude specified sites from Google search results
 // @author       VinSlif
 // @namespace    https://github.com/VinSlif/userscript
-// @version      1.0
+// @version      1.1.0
 // @downloadURL  https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/ExlcudeImageSite.user.js
 // @updateURL    https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/ExlcudeImageSite.user.js
 // @require      https://raw.githubusercontent.com/VinSlif/userscript/master/Utility/Utilities.js
-// @include      http*://*.google.tld/*
-// @grant        none
+// @include      http*://*.google.tld/search?*
+// @grant        GM_registerMenuCommand
+// @grant        GM_getValue
+// @grant        GM_setValue
+// @grant        GM_deleteValue
+// @noframes
 // ==/UserScript==
+
+/*
+making options menu
+https://stackoverflow.com/questions/14594346/create-a-config-or-options-page-for-a-greasemonkey-script
+*/
 
 /*
  * USER SETTINGS
@@ -38,42 +47,48 @@ var googleSearch = {
     addSiteExclusion: function () {
         if (this.searchForm) {
             // Checks if form has changed
-            let valChanged = false;
+            let valChanged = false,
+                exclSite = '';
 
             // Goes through all excluded sites to remove from search results
             for (let i = 0, len = ExcludedSites.length; i < len; i++) {
+                exclSite = this.siteMod + ExcludedSites[i];
+
                 // Checks if google search form has site exclusion
-                if (this.searchForm.value.indexOf(this.siteMod + ExcludedSites[i]) === -1) {
+                if (this.searchForm.value.indexOf(exclSite) === -1) {
                     // Adds site exclusion to form
-                    this.searchForm.value += ' ' + this.siteMod + ExcludedSites[i];
+                    this.searchForm.value += ' ' + exclSite;
                     valChanged = true;
                 }
             }
 
             // Adds site exclusion
             if (valChanged) this.clickGoogleSearchButton();
-        } else Util.console.error('searchForm not found');
+        }
     },
 
     // Removes the site site exclusion modifier
     removeSiteExclusion: function () {
         if (this.searchForm) {
             // Checks if form has changed
-            let valChanged = false;
+            let valChanged = false,
+                exclSite = '';
 
             // Goes through all excluded sites to remove from search results
             for (let i = 0, len = ExcludedSites.length; i < len; i++) {
+                exclSite = this.siteMod + ExcludedSites[i];
+
                 // Checks if google search form does not have site exclusion
-                if (this.searchForm.value.indexOf(this.siteMod + ExcludedSites[i]) !== -1) {
+                if (this.searchForm.value.indexOf(exclSite) !== -1) {
                     // Removes site exclusion from form
-                    this.searchForm.value = this.searchForm.value.replace(this.siteMod + ExcludedSites[i], '');
+                    this.searchForm.value = this.searchForm.value.replace(exclSite, '');
                     valChanged = true;
                 }
             }
 
             // Removes site exclusion
             if (valChanged) this.clickGoogleSearchButton();
-        } else Util.console.error('searchForm not found');
+        }
     },
 
     // Clicks Google search button
@@ -82,8 +97,21 @@ var googleSearch = {
     }
 };
 
+var modal = {
+    el: null,
+    doShow: false,
+    created: false
+
+};
+
+
 (function () {
     'use strict';
+
+    GM_registerMenuCommand(GM_info.script.name + ': toggle settings modal', function () {
+        modal.doShow = !modal.doShow;
+        console.log(modal.doShow);
+    });
 
     // Checks if searchState is within bounds
     if (ActiveStates.indexOf(searchState) !== -1) {
