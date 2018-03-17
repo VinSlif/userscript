@@ -3,7 +3,7 @@
 // @description  Adds customized cookies to websites
 // @author       VinSlif
 // @namespace    https://github.com/VinSlif/userscript
-// @version      0.3.0
+// @version      0.3.1
 // @downloadURL  https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/CookieController.user.js
 // @updateURL    https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/CookieController.user.js
 // @require      https://raw.githubusercontent.com/VinSlif/userscript/master/Utility/Utilities.js
@@ -96,52 +96,107 @@ var cookie = {
     },
 
     // Site actions object class constructor
-    siteCookie: function (host, cookieInfo, customEvent = function () { document.location.reload(); }) {
-        this.host = host; this.cookieInfo = cookieInfo; this.customEvent = customEvent;
+    siteCookie: function (host, cookieInfo, customEvent = function () {
+        document.location.reload();
+    }) {
+        this.host = host;
+        this.cookieInfo = cookieInfo;
+        this.customEvent = customEvent;
     },
     // Cookie info object class constructor
     cookieInfo: function (name, value, assigner = null, delimiter = null) {
-        this.name = name; this.value = value; this.assigner = assigner; this.delimiter = delimiter;
+        this.name = name;
+        this.value = value;
+        this.assigner = assigner;
+        this.delimiter = delimiter;
     }
 };
 
 // Maybe do: make table bodies draggable for order sorting?
 var modal = {
+    el: null,
+    doShow: false,
+    created: false,
+
     // need sidebar move in
     // https://www.w3schools.com/howto/howto_js_sidenav.asp
-    
-    tableCss: [['.cookieTable:nth-child(odd)', ['background-color', 'rgb(150, 150, 150)']]],
 
-    cookieModalStr: '<div style="right: 1%; top: 1%; height: 98%; position: fixed; z-index: 99999; background-color: white; overflow-x: hidden; width: 40%; display:none;">' +
-        '<h1 style="text-align: center; margin: 0 auto 1% auto; font-size: 1.25em">Set Cookies</h1>' +
-        '<table id="rel_table" style="width: 96%; margin: 0 auto 0.5em auto; text-align: center; border-collapse: collapse">' +
-        '<tbody>' +
-        '<tr>' +
-        '<th style="width: 40%; border-bottom: 2px solid black;">Site</th>' +
-        '<th style="width: 15%; border-bottom: 2px solid black;">Cookie</th>' +
-        '<th style="width: 15%;border-bottom: 2px solid black;">Value</th>' +
-        '<th style="width: 10%;border-bottom: 2px solid black;">mult</th>' +
-        '<th style="width: 10%;border-bottom: 2px solid black;">fn</th>' +
-        '<th style="width: 10%;border-bottom: 2px solid black;">-</th>' +
-        '</tr>' +
-        '</tbody>' +
-        '</table>' +
-        '<button id="cookieAddInfo" type="button" style="height: 2em; margin-left: 1em">' +
-        '<p style="margin: 0 auto">Add Cookie</p>' +
-        '</button>' +
-        '</div>',
+    // Need to normalize css
+    // https://www.w3schools.com/cssref/css_default_values.asp
+    tableCss: [
+        // Normalize
+        // Div
+        ['#cookieModal',
+         ['right', '1%'], ['top', '1%'], ['width', '40%'], ['height', '98%'], ['overflow-x', 'hidden'], ['background-color', 'white'], ['position', 'fixed'], ['right', '1%'], ['z-index', '999999999999999999999999999999999999999'], ['border', '0.2em solid black'], ['display', 'none']],
+        ['#cookieModal *',
+         ['font', '16px/normal Helvetica, "Trebuchet MS", Verdana, sans-serif'], ['all', 'revert']],
+        //normal normal normal
+        // h1
+        ['#cookieModal > h1',
+         ['margin', '1% auto'], ['text-align', 'center'], ['font-size', '1.25em']],
+        // table
+        ['#cookieTable',
+         ['width', '96%'], ['margin', '0 auto 0.5em auto'], ['text-align', 'center'], ['border-collapse', 'collapse'], ['border-spacing', '2px']],
+        ['#cookieTable > tbody > tr > th',
+         ['text-align', 'center'], ['border-bottom', '2px solid black']],
+        ['.cookieTableRow:nth-child(odd)',
+         ['background-color', 'rgb(150, 150, 150)']],
+        // table cells
+        ['.cookieInfo > td',
+         ['margin', '0 auto']],
+        // Add info button
+        ['#cookieAddInfo',
+         ['height', '2em'], ['margin-left', '1em']],
+        ['#cookieAddInfo > p',
+         ['margin', '0 auto']],
+    ],
 
-    create: function() {
-        Util.stylesheet.addStylesheetRules(this.tableCss);
-        document.body.innerHTML += this.cookieModalStr;
-        document.getElementById('cookieAddInfo').addEventListener('click', function() { modal.addTableRow(); });
+    // Modal HTML string
+    cookieModalStr: '<div id="cookieModal"><h1>Cookie Controller</h1>' +
+        '<table id="cookieTable"><tbody><tr>' +
+        '<th style="width: 40%">Site</th>' +
+        '<th style="width: 15%">Cookie</th>' +
+        '<th style="width: 15%">Value</th>' +
+        '<th style="width: 10%">mult</th>' +
+        '<th style="width: 10%">fn</th>' +
+        '<th style="width: 10%">-</th>' +
+        '</tr></tbody></table>' +
+        '<button id="cookieAddInfo" type="button"><p>Add Cookie</p></button></div>',
+
+    // Used to inject the modal + functionality into the page
+    create: function () {
+        if (!modal.created) {
+            Util.stylesheet.addStylesheetRules(modal.tableCss);
+            document.body.innerHTML += modal.cookieModalStr;
+
+            modal.el = document.getElementById('cookieModal');
+
+            document.getElementById('cookieAddInfo').addEventListener('click', function () {
+                modal.addTableRow();
+            });
+
+            document.addEventListener('keypress', function (e) {
+                if (e.keyCode == 47) modal.hide(); // ? key
+            });
+
+            modal.created = true;
+        }
     },
-    
-    getGroup: function (el) { return el.parentElement.parentElement.parentElement; },
+
+    show: function () {
+        this.el.style.display = 'block';
+    },
+
+    hide: function () {
+        this.el.style.display = 'none';
+    },
+
+    getGroup: function (el) {
+        return el.parentElement.parentElement.parentElement;
+    },
 
     confirmDelete: function (el) {
-        let doDel = confirm('Delete Entry?');
-        if (doDel) {
+        if (confirm('Delete Entry?')) {
             let row = modal.getGroup(el);
             row.parentNode.removeChild(row);
         }
@@ -149,6 +204,7 @@ var modal = {
 
     showMulti: function (el) {
         let row = modal.getGroup(el).querySelector('.cookieMultiVal');
+        console.log(row);
         row.style = 'display: ' + (el.checked ? 'contents' : 'none');
     },
 
@@ -205,17 +261,16 @@ var modal = {
         row.className = 'cookieInfo';
         mltRow.className = 'cookieMultiVal';
         funcRow.className = 'cookieCustomFunc';
-        tbdy.className = 'cookieTable';
+        tbdy.className = 'cookieTableRow';
 
         // set border style
-        siteCell.style = ckNameCell.style = ckValCell.style = showMltCell.style = showFuncCell.style = 'border-right: 1px solid rgb(200, 200, 200);';
-        spcerCell.style = 'height: 0.1em';
+        spcerCell.style = 'height: 0.2em';
 
         // set styles
         delCellBtn.style = 'margin: 0 auto';
         delCellBtnP.style = 'margin: 0';
-        mltRow.style = 'display: ' + (hasMlt ? 'contents' : 'none');
-        funcRow.style = 'display: ' + (hasFunc ? 'contents' : 'none');
+        mltRow.style.display = hasMlt ? 'contents' : 'none';
+        funcRow.style.display = hasFunc ? 'contents' : 'none';
         mltRowAsgnIn.style = mltRowDelimIn.style = 'width: 96%';
         funcRowIn.style = 'width: 98%; overflow-y: auto;resize: none';
 
@@ -252,9 +307,15 @@ var modal = {
 
 
         // set onclicks
-        showMltCellIn.onclick = function () { modal.showMulti(this); };
-        showFuncCellIn.onclick = function () { modal.showCustomFunc(this); };
-        delCellBtn.onclick = function () { modal.confirmDelete(this); };
+        showMltCellIn.onclick = function () {
+            modal.showMulti(this);
+        };
+        showFuncCellIn.onclick = function () {
+            modal.showCustomFunc(this);
+        };
+        delCellBtn.onclick = function () {
+            modal.confirmDelete(this);
+        };
 
         // append spacer row
         spcer.appendChild(spcerCell);
@@ -287,7 +348,7 @@ var modal = {
         // append spacer row
         tbdy.appendChild(spcer.cloneNode(true));
         // append table group to table
-        let tble = document.getElementById('rel_table');
+        let tble = document.getElementById('cookieTable');
         tble.appendChild(tbdy);
     },
 };
@@ -308,11 +369,33 @@ var sitesArray = [
 
 (function () {
     'use strict';
-    // Create modal
-    document.addEventListener('DOMContentLoaded', function() { modal.create(); });
-    
-    // Find matching hostname
+
+    // Menu toggle
+    GM_registerMenuCommand(GM_info.script.name + ': toggle settings modal', function () {
+        modal.doShow = !modal.doShow;
+        if (modal.doShow) modal.show();
+        else modal.hide();
+    });
+
     var loc = location.host.replace('www.', '');
+
+    // Create modal
+    Util.event.onDocumentReady(modal.create);
+
+    // YouTube uses HTML5 history api for page loading
+    if (loc == 'youtube.com') {
+        // https://stackoverflow.com/a/17128566
+        // https://stackoverflow.com/a/34100952
+        window.addEventListener('spfdone', modal.create); // old youtube design
+        window.addEventListener('yt-navigate-start', modal.create); // new youtube design
+    }
+
+    document.addEventListener('keypress', function (e) {
+        if (e.keyCode == 106) document.getElementById('cookieModal').style.display = 'block';
+        else if (e.keyCode == 107) document.getElementById('cookieModal').style.display = 'none';
+    });
+
+    // Find matching hostname
     for (let i = 0, len = sitesArray.length; i < len; i++)
         if (loc == sitesArray[i].host) cookie.check(sitesArray[i]);
 })();
