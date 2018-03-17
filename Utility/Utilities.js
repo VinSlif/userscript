@@ -117,7 +117,7 @@ var Util = {
          * @param {String} storage key
          * @param {Value} value to be stored
          */
-        setKey: function (key, val) {
+        set: function (key, val) {
             val = JSON.stringify(val);
             if (typeof GM_setValue === 'undefined') {
                 return localStorage.setItem(key, val);
@@ -127,7 +127,7 @@ var Util = {
         /* Retrieves item in storage by a key
          * @param {String} storage key
          */
-        getKey: function (key) {
+        get: function (key) {
             var res;
             if (typeof GM_getValue === 'undefined') {
                 res = localStorage.getItem(key);
@@ -143,7 +143,7 @@ var Util = {
         /* Deletes item in storage by a key
          * @param {String} storage key
          */
-        delKey: function (key) {
+        del: function (key) {
             if (typeof GM_deleteValue === 'undefined') {
                 return localStorage.removeItem(key);
             }
