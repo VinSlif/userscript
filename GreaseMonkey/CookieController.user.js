@@ -3,7 +3,7 @@
 // @description  Adds customized cookies to websites
 // @author       VinSlif
 // @namespace    https://github.com/VinSlif/userscript
-// @version      0.3.2
+// @version      0.3.3
 // @downloadURL  https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/CookieController.user.js
 // @updateURL    https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/CookieController.user.js
 // @require      https://raw.githubusercontent.com/VinSlif/userscript/master/Utility/Utilities.js
@@ -155,7 +155,7 @@ var modal = {
     ],
 
     // Modal HTML string
-    cookieModalStr: '<div id="cookieModal"><h1>Cookie Controller</h1>' +
+    cookieModalStr: '<h1>Cookie Controller</h1>' +
         '<table id="cookieTable"><tbody><tr>' +
         '<th style="width: 40%">Site</th>' +
         '<th style="width: 15%">Cookie</th>' +
@@ -164,34 +164,45 @@ var modal = {
         '<th style="width: 10%">fn</th>' +
         '<th style="width: 10%">-</th>' +
         '</tr></tbody></table>' +
-        '<button id="cookieAddInfo" type="button"><p>Add Cookie</p></button></div>',
+        '<button id="cookieAddInfo" type="button"><p>Add Cookie</p></button>',
 
     // Used to inject the modal + functionality into the page
     create: function () {
+        // Checks if modal has already been created
         if (!modal.created) {
+            // Adds own css rules
             Util.stylesheet.addStylesheetRules(modal.tableCss);
-            document.body.innerHTML += modal.cookieModalStr;
+            
+            // Crates the modal div
+            let modDiv = document.createElement('DIV');
+            modDiv.id = 'cookieModal';
+            modDiv.innerHTML = modal.cookieModalStr;
+            document.body.insertBefore(modDiv, document.body.firstElementChild);
 
+            // Sets script reference
             modal.el = document.getElementById('cookieModal');
 
+            // Adds click event listener
             document.getElementById('cookieAddInfo').addEventListener('click', function () {
                 modal.addTableRow();
             });
 
+            // Adds debug hide key
             document.addEventListener('keypress', function (e) {
                 if (e.keyCode == 47) modal.hide(); // ? key
             });
 
+            // Sets check token
             modal.created = true;
         }
     },
 
     show: function () {
-        this.el.style.display = 'block';
+        if (this.el) this.el.style.display = 'block';
     },
 
     hide: function () {
-        this.el.style.display = 'none';
+        if (this.el) this.el.style.display = 'none';
     },
 
     getGroup: function (el) {
@@ -392,11 +403,6 @@ var sitesArray = [
         window.addEventListener('spfdone', modal.create); // old youtube design
         window.addEventListener('yt-navigate-start', modal.create); // new youtube design
     }
-
-    document.addEventListener('keypress', function (e) {
-        if (e.keyCode == 106) document.getElementById('cookieModal').style.display = 'block';
-        else if (e.keyCode == 107) document.getElementById('cookieModal').style.display = 'none';
-    });
 
     // Find matching hostname
     for (let i = 0, len = sitesArray.length; i < len; i++)
