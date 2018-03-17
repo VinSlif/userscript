@@ -3,7 +3,7 @@
 // @description  Displays new chapter releases from r/manga
 // @author       VinSlif
 // @namespace    https://github.com/VinSlif/userscript
-// @version      0.3.6
+// @version      0.3.7
 // @downloadURL  https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/rmangaNewChecker.user.js
 // @updateURL    https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/rmangaNewChecker.user.js
 // @require      https://raw.githubusercontent.com/VinSlif/userscript/master/Utility/Utilities.js
@@ -19,9 +19,9 @@ var checkData = {
     // How often this should check for new updates (in seconds)
     refreshTime: 5 * 60,
     // Checks how many pages have been checked
-    cnt: 0,
+    cnt: 0, done: false,
     // Info to be displayed
-    dispMsg: [],
+    dispMsg: [], upDispMsg: [],
 
     // Starts parsing process
     startProcessing: function() {
@@ -29,9 +29,19 @@ var checkData = {
         redditData.getJSON();
     },
     
+    updateProcessed: function() {
+        this.upDispMsg.length = 0;
+        redditData.getJSON();
+    },
+    
     // Adds new link to data
     addData: function (data) {
-        if (!this.dispMsg.includes(data)) this.dispMsg.push(data);
+        // Checks if link has already been pushed
+        if (!this.dispMsg.includes(data)) {
+            // Checks if parsing first time or updating
+            if (this.done) this.upDispMsg.push(data);
+            else this.dispMsg.push(data);
+        }
     },
 
     // Checks how many pages have been parsed
@@ -39,8 +49,14 @@ var checkData = {
         this.cnt++;
         // If pages still need to be checked, get the next pages encoded url
         if (this.cnt < this.pagesToCheck) redditData.getNextPage(encodeURL);
-        // Displays all entries
-        else for (let i = 0, len = this.dispMsg.length; i < len; i++) Util.console.log(this.dispMsg[i].title + '\n' + this.dispMsg[i].permalink);
+        // Finished processing
+        else {
+            // Checks if already processed before
+            if (this.done && this.upDispMsg.length != 0) this.dispMsg.unshift(this.upDispMsg);
+            // Set intial processing token
+            this.done = true;
+            for (let i = 0, len = this.dispMsg.length; i < len; i++) Util.console.log(this.dispMsg[i].title + '\n' + this.dispMsg[i].permalink);
+        }
     },
     
     // Object constructor for link entries found from JSON
@@ -99,7 +115,6 @@ var redditData = {
 
     // Checks for new releases at an interval
     var check = setInterval(function () {
-        // Restarts cycle
-        checkData.startProcessing();
+        checkData.updateProcessed();
     }, checkData.refreshTime * 1000);
 })();
