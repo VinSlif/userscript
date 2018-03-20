@@ -3,7 +3,7 @@
 // @description  Adds customized cookies to websites
 // @author       VinSlif
 // @namespace    https://github.com/VinSlif/userscript
-// @version      0.4.0
+// @version      0.4.1
 // @downloadURL  https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/CookieController.user.js
 // @updateURL    https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/CookieController.user.js
 // @require      https://raw.githubusercontent.com/VinSlif/userscript/master/Utility/Utilities.js
@@ -31,7 +31,6 @@ var settings = {
                 (this.saved[i].cstmFn || null);
             toSaveStr += saveStr + '@@';
         }
-        console.log(toSaveStr);
         Util.store.set('ckieCntlr', toSaveStr);
     },
 
@@ -50,7 +49,6 @@ var settings = {
                 if (this.saved[j].cName == entry[1]) hasCk = true;
             if (!hasCk) this.saved.push(new this.cookieObj(entry[0], entry[1], entry[2], entry[3], entry[4]));
         }
-        console.log(this.saved);
     },
 
     // Populates entries with saved settings
@@ -394,7 +392,6 @@ var modal = {
 var cookie = {
     // Check what to do with cookie
     check: function (info) {
-        console.log(info);
         // Check if cookie has a limiter + delimiter
         if (info.mlti === null) {
 
@@ -458,7 +455,6 @@ var cookie = {
         if (cFinal != this.read(info.cName)) {
             // Apply cookie value changes
             this.setCookie(info.cName, cFinal, info.site);
-            // console.log('do custom function');
             this.tryCustomEval(info.cstmFn);
         }
     },
