@@ -3,7 +3,7 @@
 // @description  Exclude specified sites from Google search results
 // @author       VinSlif
 // @namespace    https://github.com/VinSlif/userscript
-// @version      1.2.1
+// @version      1.2.0
 // @downloadURL  https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/ExlcudeImageSite.user.js
 // @updateURL    https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/ExlcudeImageSite.user.js
 // @require      https://raw.githubusercontent.com/VinSlif/userscript/master/Utility/Utilities.js
@@ -40,7 +40,7 @@ var settings = {
 
         // Populates list of saved sites
         for (let i = 0, len = this.excludedSites.length; i < len; i++) {
-            modal.addSiteRow(this.excludedSites[i]);
+            modal.addTableRow(this.excludedSites[i]);
         }
     },
 
@@ -61,10 +61,15 @@ var settings = {
 };
 
 var modal = {
-    el: null, // Reference modal element
-    doShow: false, // Track display state
-    created: false, // Modal created token
+    el: null,
+    doShow: false,
+    created: false,
 
+    // need sidebar move in
+    // https://www.w3schools.com/howto/howto_js_sidenav.asp
+
+    // Need to normalize css
+    // https://www.w3schools.com/cssref/css_default_values.asp
     tableCss: [
         // Normalize
         // Div
@@ -130,8 +135,9 @@ var modal = {
 
             // Add event listeners
             document.getElementsByName('exclusionBehavior')[0].addEventListener('change', settings.getDropVal);
+
             document.getElementById('exclusionAddSite').addEventListener('click', function () {
-                modal.addSiteRow();
+                modal.addTableRow();
             });
 
             // Adds debug hide key
@@ -144,21 +150,18 @@ var modal = {
         }
     },
 
-    // Display the modal
     show: function () {
         if (this.el) this.el.style.display = 'block';
     },
 
-    // Hide the modal
     hide: function () {
         if (this.el) this.el.style.display = 'none';
     },
 
-    // Delete a table row entry
     confirmDelete: function (el) {
         if (confirm('Delete Entry?')) {
             let row = modal.getGroup(el);
-
+            
             // Remove from storage
             settings.excludedSites.splice(Util.child.getIndex(row) - 1, 1);
             Util.store.set('searchSites', settings.excludedSites.join(';'));
@@ -169,8 +172,7 @@ var modal = {
         }
     },
 
-    // Adds a new site to the table display
-    addSiteRow: function (site = null) {
+    addTableRow: function (site = null) {
         // group itself
         var tbdy = document.createElement('TBODY'),
             // main row

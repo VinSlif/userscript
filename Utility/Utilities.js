@@ -106,7 +106,7 @@ var Util = {
         },
         // Retrieves item in storage by a key
         get: function (key) {
-            let res = (typeof GM_getValue === 'undefined') ? localStorage.getItem(key) : GM_getValue(key);
+            return (typeof GM_getValue === 'undefined') ? localStorage.getItem(key) : GM_getValue(key);
             try { return JSON.parse(res); }
             catch (e) { return res; }
         },
