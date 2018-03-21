@@ -162,8 +162,9 @@ var Util = {
                     // Otherwise, just compare
                     if (itemType === '[object Function]')
                         if (item1.toString() !== item2.toString()) return false;
-                    else
+                    else {
                         if (item1 !== item2) return false;
+                    }
                 }
             };
 
