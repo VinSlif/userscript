@@ -106,23 +106,9 @@ var Util = {
         },
         // Retrieves item in storage by a key
         get: function (key) {
-<<<<<<< HEAD
-            return (typeof GM_getValue === 'undefined') ? localStorage.getItem(key) : GM_getValue(key);
+            let res (typeof GM_getValue === 'undefined') ? localStorage.getItem(key) : GM_getValue(key);
             try { return JSON.parse(res); }
             catch (e) { return res; }
-=======
-            var res;
-            if (typeof GM_getValue === 'undefined') {
-                res = localStorage.getItem(key);
-            } else {
-                res = GM_getValue(key);
-            }
-            try {
-                return JSON.parse(res);
-            } catch (e) {
-                return res;
-            }
->>>>>>> parent of 75eab07... Shortened store get
         },
         // Deletes item in storage by a key
         del: function (key) {
@@ -176,9 +162,8 @@ var Util = {
                     // Otherwise, just compare
                     if (itemType === '[object Function]')
                         if (item1.toString() !== item2.toString()) return false;
-                    else {
+                    else
                         if (item1 !== item2) return false;
-                    }
                 }
             };
 
