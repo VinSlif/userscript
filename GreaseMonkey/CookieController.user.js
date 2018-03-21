@@ -3,7 +3,7 @@
 // @description  Adds customized cookies to websites
 // @author       VinSlif
 // @namespace    https://github.com/VinSlif/userscript
-// @version      0.4.2
+// @version      0.4.1
 // @downloadURL  https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/CookieController.user.js
 // @updateURL    https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/CookieController.user.js
 // @require      https://raw.githubusercontent.com/VinSlif/userscript/master/Utility/Utilities.js
@@ -19,10 +19,6 @@
 var settings = {
     // Saved settings values
     saved: [],
-    
-    // Sets default/example settings
-    savedDefaultStr: 'youtube.com@PREF@f6=40008&f5=30030@["=","&"]@null@@' +
-        'reddit.com@over18@1@null@if(-1!==location.pathname.indexOf("over18")){let a=location.href;document.location=decodeURIComponent(a.substr(a.indexOf("?dest=")+6))}else document.location.reload();@@',
 
     // Converts and saves settings to storage
     encode: function () {
@@ -41,7 +37,8 @@ var settings = {
     // Gets and converts settings from storage
     decode: function () {
         // Gets stored settings/sets example default values
-        let stored = typeof Util.store.get('ckieCntlr') !== 'undefined' || Util.store.get('ckieCntlr') !== null ? Util.store.get('ckieCntlr') : this.savedDefaultStr;
+        let stored = typeof Util.store.get('ckieCntlr') !== 'undefined' && Util.store.get('ckieCntlr') !== null ? Util.store.get('ckieCntlr') : 'youtube.com@PREF@f6=40008&f5=30030@["=","&"]@null@@' +
+            'reddit.com@over18@1@null@if(-1!==location.pathname.indexOf("over18")){let a=location.href;document.location=decodeURIComponent(a.substr(a.indexOf("?dest=")+6))}else document.location.reload();@@',
             savedStr = stored.split('@@'); // Splits strings into individual entries
 
         // Send settings to stored information to parse on site
@@ -115,83 +112,36 @@ var modal = {
         // Normalize
         // Div
         ['#cookieModal',
-         ['right', '1%'],
-         ['top', '1%'],
-         ['width', '40%'],
-         ['height', '98%'],
-         ['overflow-x', 'auto'],
-         ['background-color', 'white'],
-         ['position', 'fixed'],
-         ['right', '1%'],
-         ['z-index', '999999999999999999999999999999999999999'],
-         ['border', '0.2em solid black'],
-         ['display', 'none']],
+         ['right', '1%'], ['top', '1%'], ['width', '40%'], ['height', '98%'], ['overflow-x', 'auto'], ['background-color', 'white'], ['position', 'fixed'], ['right', '1%'], ['z-index', '999999999999999999999999999999999999999'], ['border', '0.2em solid black'], ['display', 'none']],
         ['#cookieModal *',
-         ['font', '12px/normal Helvetica, "Trebuchet MS", Verdana, sans-serif'],
-         ['all', 'revert']],
+         ['font', '12px/normal Helvetica, "Trebuchet MS", Verdana, sans-serif'], ['all', 'revert']],
         //normal normal normal
         // h1
         ['#cookieModal > h1',
-         ['margin', '1% auto'],
-         ['text-align', 'center'],
-         ['font-size', '1.25em']],
+         ['margin', '1% auto'], ['text-align', 'center'], ['font-size', '1.25em']],
         // table
         ['#cookieTable',
-         ['width', '96%'],
-         ['margin', '0 auto 0.5em auto'],
-         ['text-align', 'center'],
-         ['border-collapse', 'collapse'],
-         ['border-spacing', '2px']],
+         ['width', '96%'], ['margin', '0 auto 0.5em auto'], ['text-align', 'center'], ['border-collapse', 'collapse'], ['border-spacing', '2px']],
         ['#cookieTable > tbody > tr > th',
-         ['text-align', 'center'],
-         ['border-bottom', '2px solid black']],
+         ['text-align', 'center'], ['border-bottom', '2px solid black']],
         ['.cookieTableRow:nth-child(odd)',
          ['background-color', 'rgb(150, 150, 150)']],
         // table cells
         ['.cookieInfo > td',
          ['margin', '0 auto']],
         ['.cookiecustomFnc > td > textarea',
-         ['width', '100%'],
-         ['padding', '0'],
-         ['overflow-y', 'auto'],
-         ['resize', 'none']],
+         ['width', '100%'], ['padding', '0'], ['overflow-y', 'auto'], ['resize', 'none']],
         // Add info button
         ['#cookieAddInfo',
-         ['height', '2em'],
-         ['margin-left', '1em']],
+         ['height', '2em'], ['margin-left', '1em']],
         ['#cookieAddInfo > p',
          ['margin', '0 auto']],
-        // Add close modal button
-        ['#cookieCloseBtn',
-         ['position', 'fixed'],
-         ['top', '-0.5em'],
-         ['right', '0.5em'],
-         ['height', '2em'],
-         ['width', '2em'],
-         ['background-color', 'red'],
-         ['border', '4px solid white'],
-         ['border-radius', '50%'],
-         ['cursor', 'pointer'],
-         ['-webkit-transition', 'all 0.3s ease-in-out'],
-         ['-moz-transition', 'all 0.3s ease-in-out'],
-         ['-o-transition', 'all 0.3s ease-in-out'],
-         ['transition', 'all 0.3s ease-in-out']],
-        ['#cookieCloseBtn:hover', ['transform', 'scale(1.1)']],
-        ['#cookieCloseBtn > p', ['text-align', 'center'],
-         ['margin', '0.25em 0 0 0.05em'],
-         ['width', '1.5em'],
-         ['height', '1.5em'],
-         ['font', 'bold 20px/normal Arial, Helvetica, "Trebuchet MS", Verdana, sans-serif'],
-         ['color', 'white'],
-         ['cursor', 'inherit']],
         ['.unselectable',
-         ['-webkit-user-select', 'none'],
-         ['-moz-user-select', 'none']],
+         ['-webkit-user-select', 'none'], ['-moz-user-select', 'none']],
     ],
 
     // Modal HTML string
     cookieModalStr: '<h1 class="unselectable">Cookie Controller</h1>' +
-        '<div id="cookieCloseBtn" class="unselectable"><p>X</p></div>' +
         '<table id="cookieTable"><tbody class="unselectable"><tr>' +
         '<th style="width: 40%">Site</th>' +
         '<th style="width: 15%">Cookie</th>' +
@@ -220,15 +170,14 @@ var modal = {
             let unsel = modal.el.getElementsByClassName('unselectable');
             for (let i = 0, len = unsel.length; i < len; i++) unsel[i].onselectstart = function () { return false; };
 
-            // Adds click event listeners
-            modal.el.getElementById('cookieAddInfo').addEventListener('click', function () { modal.addTableRow(); });
-            modal.el.getElementById('cookieCloseBtn').addEventListener('click', function() { modal.toggle(); });
+            // Adds click event listener
+            document.getElementById('cookieAddInfo').addEventListener('click', function () { modal.addTableRow(); });
 
-            // Adds hide key (Ctrl + Shift + ? key)
-            document.addEventListener('keypress', function (e) { if (e.keyCode == 47 && e.ctrlKey && e.shiftKey) modal.toggle(); });
-            
             // Fills entries from saved settings
             settings.populate();
+
+            // Adds debug hide key (? key)
+            document.addEventListener('keypress', function (e) { if (e.keyCode == 47) modal.toggle(); });
 
             // Sets check token
             modal.created = true;
@@ -470,7 +419,8 @@ var cookie = {
         // Edits existing cookie value
         let cEdit = this.read(info.cName).split(info.mlti[1]),
             cMake = info.cVal.split(info.mlti[1]),
-            cMade = [], cFinal = '';
+            cMade = [],
+            cFinal = '';
 
         // Checks if values need to be created
         cMade.length = cMake.length;
