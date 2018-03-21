@@ -182,7 +182,7 @@ var Util = {
 
             // If nothing failed, return true
             return true;
-        };
+        }
     },
     // Handles arrays
     array: {
