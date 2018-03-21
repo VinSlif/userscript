@@ -3,7 +3,7 @@
 // @description  Adds customized cookies to websites
 // @author       VinSlif
 // @namespace    https://github.com/VinSlif/userscript
-// @version      0.4.1
+// @version      0.4.2
 // @downloadURL  https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/CookieController.user.js
 // @updateURL    https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/CookieController.user.js
 // @require      https://raw.githubusercontent.com/VinSlif/userscript/master/Utility/Utilities.js
@@ -221,8 +221,8 @@ var modal = {
             for (let i = 0, len = unsel.length; i < len; i++) unsel[i].onselectstart = function () { return false; };
 
             // Adds click event listeners
-            modal.el.getElementById('cookieAddInfo').addEventListener('click', function () { modal.addTableRow(); });
-            modal.el.getElementById('cookieCloseBtn').addEventListener('click', function() { modal.toggle(); });
+            document.getElementById('cookieAddInfo').addEventListener('click', function () { modal.addTableRow(); });
+            document.getElementById('cookieCloseBtn').addEventListener('click', function() { modal.toggle(); });
 
             // Adds hide key (Ctrl + Shift + ? key)
             document.addEventListener('keypress', function (e) { if (e.keyCode == 47 && e.ctrlKey && e.shiftKey) modal.toggle(); });
