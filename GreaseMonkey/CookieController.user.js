@@ -3,7 +3,7 @@
 // @description  Adds customized cookies to websites
 // @author       VinSlif
 // @namespace    https://github.com/VinSlif/userscript
-// @version      0.4.2
+// @version      0.4.3
 // @downloadURL  https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/CookieController.user.js
 // @updateURL    https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/CookieController.user.js
 // @require      https://raw.githubusercontent.com/VinSlif/userscript/master/Utility/Utilities.js
@@ -41,7 +41,7 @@ var settings = {
     // Gets and converts settings from storage
     decode: function () {
         // Gets stored settings/sets example default values
-        let stored = typeof Util.store.get('ckieCntlr') !== 'undefined' || Util.store.get('ckieCntlr') !== null ? Util.store.get('ckieCntlr') : this.savedDefaultStr;
+        let stored = typeof Util.store.get('ckieCntlr') !== 'undefined' || Util.store.get('ckieCntlr') !== null ? Util.store.get('ckieCntlr') : this.savedDefaultStr,
             savedStr = stored.split('@@'); // Splits strings into individual entries
 
         // Send settings to stored information to parse on site
