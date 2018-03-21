@@ -75,8 +75,7 @@ var Util = {
                     propStr = '';
                 // If the second argument of a rule is an array of arrays, correct our variables.
                 if (Object.prototype.toString.call(rule[1][0]) === '[object Array]') {
-                    rule = rule[1];
-                    j = 0;
+                    rule = rule[1]; j = 0;
                 }
 
                 for (let pl = rule.length; j < pl; j++) {
@@ -102,25 +101,18 @@ var Util = {
         // Sets storage value with a key
         set: function (key, val) {
             val = JSON.stringify(val);
-            if (typeof GM_setValue === 'undefined') {
-                return localStorage.setItem(key, val);
-            }
+            if (typeof GM_setValue === 'undefined') return localStorage.setItem(key, val);
             return GM_setValue(key, val);
         },
         // Retrieves item in storage by a key
         get: function (key) {
             return (typeof GM_getValue === 'undefined') ? localStorage.getItem(key) : GM_getValue(key);
-            try {
-                return JSON.parse(res);
-            } catch (e) {
-                return res;
-            }
+            try { return JSON.parse(res); }
+            catch (e) { return res; }
         },
         // Deletes item in storage by a key
         del: function (key) {
-            if (typeof GM_deleteValue === 'undefined') {
-                return localStorage.removeItem(key);
-            }
+            if (typeof GM_deleteValue === 'undefined') return localStorage.removeItem(key);
             return GM_deleteValue(key);
         },
     },
@@ -129,9 +121,8 @@ var Util = {
         // Returns the child index of an element
         getIndex: function (child) {
             var parent = child.parentNode;
-            for (let i = parent.children.length - 1; i >= 0; i--) {
+            for (let i = parent.children.length - 1; i >= 0; i--) 
                 if (child == parent.children[i]) return i;
-            }
         },
     },
     // Handles objects
@@ -158,9 +149,8 @@ var Util = {
                 var itemType = Object.prototype.toString.call(item1);
 
                 // If an object or array, compare recursively
-                if (['[object Array]', '[object Object]'].indexOf(itemType) >= 0) {
+                if (['[object Array]', '[object Object]'].indexOf(itemType) >= 0) 
                     if (!Util.object.isEquivalent(item1, item2)) return false;
-                }
 
                 // Otherwise, do a simple comparison
                 else {
@@ -170,27 +160,22 @@ var Util = {
 
                     // Else if it's a function, convert to a string and compare
                     // Otherwise, just compare
-                    if (itemType === '[object Function]') {
+                    if (itemType === '[object Function]')
                         if (item1.toString() !== item2.toString()) return false;
-                    } else {
+                    else {
                         if (item1 !== item2) return false;
                     }
-
                 }
             };
 
             // Compare properties
             if (type === '[object Array]') {
-                for (let i = 0; i < aLen; i++) {
+                for (let i = 0; i < aLen; i++)
                     if (compare(a[i], b[i]) === false) return false;
-                }
-            } else {
-                for (let key in a) {
-                    if (a.hasOwnProperty(key)) {
+            } else
+                for (let key in a)
+                    if (a.hasOwnProperty(key))
                         if (compare(a[key], b[key]) === false) return false;
-                    }
-                }
-            }
 
             // If nothing failed, return true
             return true;
