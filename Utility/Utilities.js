@@ -183,18 +183,6 @@ var Util = {
             // If nothing failed, return true
             return true;
         };
-
-        // Compare properties
-        if (type === '[object Array]') {
-            for (let i = 0; i < aLen; i++)
-                if (compare(a[i], b[i]) === false) return false;
-        } else
-            for (let key in a)
-                if (a.hasOwnProperty(key))
-                    if (compare(a[key], b[key]) === false) return false;
-
-        // If nothing failed, return true
-        return true;
     },
     // Handles arrays
     array: {
