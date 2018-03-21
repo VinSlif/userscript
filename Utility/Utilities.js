@@ -121,7 +121,7 @@ var Util = {
         // Returns the child index of an element
         getIndex: function (child) {
             var parent = child.parentNode;
-            for (let i = parent.children.length - 1; i >= 0; i--) 
+            for (let i = parent.children.length - 1; i >= 0; i--)
                 if (child == parent.children[i]) return i;
         },
     },
@@ -129,6 +129,8 @@ var Util = {
     object: {
         // Checks if two (2) objects or arrays are equal to each other
         isEquivalent: function (a, b) {
+            // taken from
+            // https://gomakethings.com/check-if-two-arrays-or-objects-are-equal-with-javascript/
             // Get the value type
             var type = Object.prototype.toString.call(a);
 
@@ -149,20 +151,17 @@ var Util = {
                 var itemType = Object.prototype.toString.call(item1);
 
                 // If an object or array, compare recursively
-                if (['[object Array]', '[object Object]'].indexOf(itemType) >= 0) 
-                    if (!Util.object.isEquivalent(item1, item2)) return false;
-
-                // Otherwise, do a simple comparison
-                else {
-
+                if (['[object Array]', '[object Object]'].indexOf(itemType) >= 0) {
+                    if (!isEqual(item1, item2)) return false;
+                } else { // Otherwise, do a simple comparison
                     // If the two items are not the same type, return false
                     if (itemType !== Object.prototype.toString.call(item2)) return false;
 
                     // Else if it's a function, convert to a string and compare
                     // Otherwise, just compare
-                    if (itemType === '[object Function]')
+                    if (itemType === '[object Function]') {
                         if (item1.toString() !== item2.toString()) return false;
-                    else {
+                    } else {
                         if (item1 !== item2) return false;
                     }
                 }
@@ -170,16 +169,32 @@ var Util = {
 
             // Compare properties
             if (type === '[object Array]') {
-                for (let i = 0; i < aLen; i++)
+                for (var i = 0; i < aLen; i++) {
                     if (compare(a[i], b[i]) === false) return false;
-            } else
-                for (let key in a)
-                    if (a.hasOwnProperty(key))
+                }
+            } else {
+                for (var key in a) {
+                    if (a.hasOwnProperty(key)) {
                         if (compare(a[key], b[key]) === false) return false;
+                    }
+                }
+            }
 
             // If nothing failed, return true
             return true;
-        }
+        };
+
+        // Compare properties
+        if (type === '[object Array]') {
+            for (let i = 0; i < aLen; i++)
+                if (compare(a[i], b[i]) === false) return false;
+        } else
+            for (let key in a)
+                if (a.hasOwnProperty(key))
+                    if (compare(a[key], b[key]) === false) return false;
+
+        // If nothing failed, return true
+        return true;
     },
     // Handles arrays
     array: {
