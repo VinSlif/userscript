@@ -56,14 +56,14 @@ var Util = {
             ['background-color', 'yellow']
         ]]);
         */
-        addStylesheetRules: function (rules) {
+        addStylesheetRules: function (rules, doc = document) {
             // taken from
             // https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet/insertRule
-            var styleEl = document.createElement('style'),
+            var styleEl = doc.createElement('style'),
                 styleSheet;
 
             // Append style element to head
-            document.head.appendChild(styleEl);
+            doc.head.appendChild(styleEl);
 
             // Grab style sheet
             styleSheet = styleEl.sheet;
@@ -191,6 +191,15 @@ var Util = {
             for (let i = 0, len = a.length; i < len; i++)
                 if (a[i] !== (typeof b !== 'undefined' ? b : a[0])) return false;
             return true;
+        },
+        // Gets the number of matches in arrays
+        getNumMatches: function (a, b) {
+            let bLen = b.length,
+                cnt = 0;
+            for (let i = 0, len = a.length; i < len; i++)
+                for (let j = 0; j < bLen; j++)
+                    if (a[i] == b[j]) cnt++;
+            return cnt;
         }
     }
 };
