@@ -116,15 +116,6 @@ var Util = {
             return GM_deleteValue(key);
         },
     },
-    // Child elements
-    child: {
-        // Returns the child index of an element
-        getIndex: function (child) {
-            var parent = child.parentNode;
-            for (let i = parent.children.length - 1; i >= 0; i--)
-                if (child == parent.children[i]) return i;
-        },
-    },
     // Handles objects
     object: {
         // Checks if two (2) objects or arrays are equal to each other
@@ -152,7 +143,7 @@ var Util = {
 
                 // If an object or array, compare recursively
                 if (['[object Array]', '[object Object]'].indexOf(itemType) >= 0) {
-                    if (!isEqual(item1, item2)) return false;
+                    if (!Util.object.isEquivalent(item1, item2)) return false;
                 } else { // Otherwise, do a simple comparison
                     // If the two items are not the same type, return false
                     if (itemType !== Object.prototype.toString.call(item2)) return false;
@@ -200,6 +191,30 @@ var Util = {
                 for (let j = 0; j < bLen; j++)
                     if (a[i] == b[j]) cnt++;
             return cnt;
-        }
+        },
+        // Returns the index of given child node
+        getChildIndex: function (node) {
+            let children = node.parentNode.childNodes, num = 0;
+            for (let i = 0, len = children.length; i < len; i++) {
+                if (children[i] == node) return num;
+                if (children[i].nodeType == 1) num++;
+            }
+            return -1;
+        },
+        // Moves an index of an array to a new index
+        moveNode: function (arr, oldIndx, newIndx) {
+            // Taken from
+            // https://stackoverflow.com/a/5306832
+            while (oldIndx < 0) oldIndx += arr.length;
+            while (newIndx < 0) newIndx += arr.length;
+            
+            if (newIndx >= arr.length) {
+                var k = newIndx - arr.length + 1;
+                while (k--) {
+                    arr.push(undefined);
+                }
+            }
+            arr.splice(newIndx, 0, arr.splice(oldIndx, 1)[0]);
+        },
     }
 };
