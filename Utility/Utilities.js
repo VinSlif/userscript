@@ -59,8 +59,7 @@ var Util = {
         addStylesheetRules: function (rules, doc = document) {
             // taken from
             // https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet/insertRule
-            var styleEl = doc.createElement('style'),
-                styleSheet;
+            var styleEl = doc.createElement('style'), styleSheet;
 
             // Append style element to head
             doc.head.appendChild(styleEl);
@@ -69,13 +68,12 @@ var Util = {
             styleSheet = styleEl.sheet;
 
             for (let i = 0, rl = rules.length; i < rl; i++) {
-                var j = 1,
-                    rule = rules[i],
-                    selector = rules[i][0],
-                    propStr = '';
+                var j = 1, rule = rules[i], selector = rules[i][0], propStr = '';
+
                 // If the second argument of a rule is an array of arrays, correct our variables.
                 if (Object.prototype.toString.call(rule[1][0]) === '[object Array]') {
-                    rule = rule[1]; j = 0;
+                    rule = rule[1];
+                    j = 0;
                 }
 
                 for (let pl = rule.length; j < pl; j++) {
@@ -86,6 +84,22 @@ var Util = {
                 // Insert CSS Rule
                 styleSheet.insertRule(selector + '{' + propStr + '}', styleSheet.cssRules.length);
             }
+        },
+        /* Adds inline style to object
+        @example
+        toStyleStr({
+            'background-color': 'black !important',
+            'font': '0.813em monospace !important',
+            'text-align': 'center',
+        }, 'body');
+        */
+        toStyleStr: function (cssObj, element = null) {
+            var stack = [], key;
+            for (key in cssObj) {
+                if (cssObj.hasOwnProperty(key)) stack.push(key + ':' + cssObj[key]);
+            }
+            if (element) return element + '{' + stack.join(';') + '}';
+            else return stack.join(';');
         },
     },
     // Custom events
