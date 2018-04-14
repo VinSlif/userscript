@@ -3,7 +3,7 @@
 // @description  Forces the full desktop version of Wikipedia
 // @author       VinSlif
 // @namespace    https://github.com/VinSlif/userscript
-// @version      1.1.1
+// @version      1.1.2
 // @downloadURL  https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/DesktopWikipedia.user.js
 // @updateURL    https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/DesktopWikipedia.user.js
 // @require      https://raw.githubusercontent.com/VinSlif/userscript/master/Utility/Utilities.js
@@ -23,18 +23,19 @@ var allowSimple = typeof Util.store.get('allowSimple') !== 'undefined' ? Util.st
     'use strict';
 
     GM_registerMenuCommand(GM_info.script.name + ': toggle allowSimple', function () {
-        if (confirm((allowSimple ? 'Prevent' : 'Allow') + ' Wikipedia\'s simple english version ' +
-                (allowSimple ? 'from appearing.' : 'to appear.'))) {
+        if (confirm((allowSimple ?
+                'Prevent Wikipedia\'s simple english version from appearing.' :
+                'Allow Wikipedia\'s simple english version to appear.'))) {
             allowSimple = !allowSimple;
             Util.store.set('allowSimple', allowSimple);
         }
     });
 
+    // Used to check wikipedia version
     let loc = window.location;
-
     // Checks for mobile version of wikipedia
-    if (loc.host.indexOf('.m.') !== -1) window.location.href = loc.href.replace('.m.', '.');
+    if (loc.hostname.indexOf('.m.') !== -1) window.location = loc.href.replace('.m.', '.');
     // Checks for simple english version of wikipedia
-    if (!allowSimple && loc.host.indexOf('simple.') !== -1) window.location.href = loc.href.replace('simple.', 'en.');
+    if (!allowSimple && loc.hostname.indexOf('simple.') !== -1) window.location = loc.href.replace('simple.', 'en.');
 
 })();
