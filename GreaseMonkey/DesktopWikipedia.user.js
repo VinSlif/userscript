@@ -3,7 +3,7 @@
 // @description  Forces the full desktop version of Wikipedia
 // @author       VinSlif
 // @namespace    https://github.com/VinSlif/userscript
-// @version      1.1.2
+// @version      1.1.3
 // @downloadURL  https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/DesktopWikipedia.user.js
 // @updateURL    https://raw.githubusercontent.com/VinSlif/userscript/master/GreaseMonkey/DesktopWikipedia.user.js
 // @require      https://raw.githubusercontent.com/VinSlif/userscript/master/Utility/Utilities.js
@@ -36,6 +36,5 @@ var allowSimple = typeof Util.store.get('allowSimple') !== 'undefined' ? Util.st
     // Checks for mobile version of wikipedia
     if (loc.hostname.indexOf('.m.') !== -1) window.location = loc.href.replace('.m.', '.');
     // Checks for simple english version of wikipedia
-    if (!allowSimple && loc.hostname.indexOf('simple.') !== -1) window.location = loc.href.replace('simple.', 'en.');
-
+    if (allowSimple && loc.hostname.indexOf('simple.') !== -1) window.location = loc.href.replace('simple.', 'en.');
 })();
